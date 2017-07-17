@@ -12,7 +12,7 @@ description:
 baseurl:
 url:
 twitter_username:
-github_username:malshan84
+github_username: malshan84
 
 # Build settings
 markdown: kramdown
