@@ -7,7 +7,7 @@ title:  "Typescript 를 사용한 Electron+React 개발 환경 구축하기"
 
 # 준비물
 * [Create-React-App](https://github.com/facebookincubator/create-react-app)
-* [Yarn](https://yarnpkg.com/en/)
+* [Yarn](https://yarnpkg.com/en/)  
 
 
 # 설치하기 #
@@ -20,7 +20,7 @@ yarn add electron --dev
 yarn add electron-builder --dev
 yarn global add foreman # for process management
 yarn install
-```
+```  
 
 # 소스 추가 #
 `src`폴더에 `electron-starter.ts` 파일을 추가하고 아래와 같이 소스를 작성한다.
@@ -76,7 +76,8 @@ tryConnection();
 client.on('error', (error) => {
     setTimeout(tryConnection, 1000);
 });
-```
+```  
+
 # tsconfig.json 수정 #
 `module`의 설정을  `commonjs`로 수정한다.  
 `exclude` 에서 사용하지 않는 것들 을 제거한다.
@@ -109,9 +110,8 @@ client.on('error', (error) => {
 typescript컴파일 명령어를 사용하여 `build/dist`폴더에 `.js`파일들이 잘 생성 되는지 확인한다.
 ```bash
 tsc
-```
-
-
+```  
+  
 # package.json 수정 #
 `main`, `build`옵션은 새로 추가하고 `script`는 수정한다.
 ```
@@ -139,15 +139,15 @@ tsc
         "buildResources": "public"
     }
   }
-```
-
+```  
+  
 # procfile 생성 #
 루트 폴더에 `procfile`파일을 생성하고 아래와 같이 작성한다.
 ```
 react: npm run react-start
 electron: npm run electron-start
-```
-
+```  
+  
 # 실행 #
 ```bash
 yarn start
