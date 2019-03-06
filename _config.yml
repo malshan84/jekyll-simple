@@ -30,3 +30,5 @@ disqus_shortname:
 excerpt_separator: <!--description-->
 
 google_analytics_id: UA-105757328-1
+
+theme: jekyll-theme-cayman
