@@ -13,7 +13,9 @@ springboot native를 사용하는 방법은 아래 링크에 아주 친절하게
 
 기존 pom.xml에 위 링크에 있는 설정들을 추가 후 package를 하면 아래와 같은 에러가 발생하는 경우가 있다.
 
-`Failed to execute goal org.springframework.experimental:spring-aot-maven-plugin:0.9.0:test-generate (test-generate) on project pms: Build failed during Spring AOT test code generation: Could not generate spring.factories source code: Devtools is not supported yet, please remove the related dependency for now. -> [Help 1]`
+```
+Failed to execute goal org.springframework.experimental:spring-aot-maven-plugin:0.9.0:test-generate (test-generate) on project pms: Build failed during Spring AOT test code generation: Could not generate spring.factories source code: Devtools is not supported yet, please remove the related dependency for now. -> [Help 1]
+```
 
 Spring project를 자동으로 생성했다면 dependencies에 아래 종속성이 있을것이다.
 
@@ -61,23 +63,14 @@ Error: Image build request failed with exit status 1
 지원하지 않는 architecture라는 에러가 출력된다. github에서 graalvm 소스코드의 architecture를 validation하는 코드를 찾아보다 아래와 같은 코드를 발견했다.
 
 ```
- protected CompilerInfo createCompilerInfo(Path compilerPath, Scanner outerScanner) {
-            try (Scanner scanner = new Scanner(outerScanner.nextLine())) {
-                String targetArch = null;
-                /* For cl.exe the first line holds all necessary information */
-                if (scanner.hasNext("\u7528\u4E8E")) {
-                    /* Simplified-Chinese has targetArch first */
-                    scanner.next();
-                    targetArch = scanner.next();
-                }
-                /*
-                 * Some cl.exe print "... Microsoft (R) C/C++ ... ##.##.#####" while others print
-                 * "...C/C++ ... Microsoft (R) ... ##.##.#####".
-                 */
-                if (scanner.findInLine("Microsoft.*\\(R\\) C/C\\+\\+") == null &&
-                                scanner.findInLine("C/C\\+\\+.*Microsoft.*\\(R\\)") == null) {
-                    return null;
-                }
+
+ /*
+ * Some cl.exe print "... Microsoft (R) C/C++ ... ##.##.#####" while others print
+ * "...C/C++ ... Microsoft (R) ... ##.##.#####".
+ */
+ if (scanner.findInLine("Microsoft.*\\(R\\) C/C\\+\\+") == null & scanner.findInLine("C/C\\+\\+.*Microsoft.*\\(R\\)") == null) {
+    return null;
+}
 ```
 
 아마도 cl.exe를 실행해서 나오는 정보를 parsing해서 architecture를 추측하는 모양이다. cl.exe를 한 번 수행해 보면 아래와 같은 정보가 출력 된다.
